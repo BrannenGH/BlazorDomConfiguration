@@ -46,10 +46,7 @@ The meta tag attributes are [prefixed by data](https://developer.mozilla.org/en-
 
 ### How to Setup the Blazor project
 
-Add the following PackageReference to your csproj.
-
-
-This library requires the use of the [IJSInProcessRuntime](https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsinprocessruntime) to access the DOM to extract the <meta> tags. This can normally be found in the IServiceCollection that gets passed to ConfigureServices at configuration time.
+Add the [NuGet package](https://www.nuget.org/packages/Fario.Extensions.Configuration) to your csproj, and then add the following to `Startup.ConfigureServices`:
 
 ```C#
 public void ConfigureServices(IServiceCollection services)
@@ -65,6 +62,8 @@ public void ConfigureServices(IServiceCollection services)
 	// Other service logic
 }
 ```
+
+This library requires the use of the [IJSInProcessRuntime](https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsinprocessruntime) to access the DOM to extract the <meta> tags. This can normally be found in the IServiceCollection that gets passed to ConfigureServices at configuration time.
 
 ## Future Goals
 
