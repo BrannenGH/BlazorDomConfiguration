@@ -4,6 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
+    <PackageId>Fario.Extensions.Configuration</PackageId>
+    <Authors>Brannen Hall</Authors>
+    <Company>Brannen Hall</Company>
+    <PackageId>Fario.Extensions.Configuration</PackageId>
     <Version>0.0.1</Version>
   </PropertyGroup>
 
