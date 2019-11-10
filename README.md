@@ -6,7 +6,7 @@ This extension allows creating an [IConfiguration](https://docs.microsoft.com/en
 
 ## Approach
 
-While most ASP.NET applications support [importing a configuration at startup](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/), this is difficult to do in a client-side Blazor application because of the limited browser environment, which usually just consists of the DOM, your app assembly, and some CSS files. Currently, the approach most applications are taking is to bake the configuration information to the assembly, but this means that any change in configuration requires creating a new assembly.
+While most ASP.NET applications support [importing a configuration at startup](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/), this is difficult to do in a client-side Blazor application. This is because the limited browser environment, which usually just consists of the DOM, your app assembly, and some CSS files, doesn't have a good place to put configuration key value pairs that can be accessed at application bootstrapping time. Currently, the approach most applications are taking is to put the configuration information into the assembly, but this means that any change in configuration requires creating a new assembly.
 
 To avoid creating a new assembly, this approach bakes configuration values into the DOM. This still means that the document structure is tied to the configuration, but it is much easier to manage many different `index.html` files than it is to manage many different assemblies.
 
@@ -44,7 +44,9 @@ So that you end up with something like this:
 
 The meta tag attributes are [prefixed by data](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*) to ensure the resulting DOM is still HTML5 standards compliant.
 
-This library requires the use of the [IJSInProcessRuntime](https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsinprocessruntime) to access the DOM to extract the <meta> tags. This can normally be found in the IServiceCollection that gets passed to ConfigureServices at configuration time.
+### How to Setup the Blazor project
+
+Add the [NuGet package](https://www.nuget.org/packages/Fario.Extensions.Configuration) to your csproj, and then add the following to `Startup.ConfigureServices`:
 
 ```C#
 public void ConfigureServices(IServiceCollection services)
@@ -60,6 +62,8 @@ public void ConfigureServices(IServiceCollection services)
 	// Other service logic
 }
 ```
+
+This library requires the use of the [IJSInProcessRuntime](https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsinprocessruntime) to access the DOM to extract the <meta> tags. This can normally be found in the IServiceCollection that gets passed to ConfigureServices at configuration time.
 
 ## Future Goals
 
