@@ -9,6 +9,7 @@
     <Company>Brannen Hall</Company>
     <PackageId>Fario.Extensions.Configuration</PackageId>
     <Version>0.0.1</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

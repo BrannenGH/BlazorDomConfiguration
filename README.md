@@ -44,6 +44,11 @@ So that you end up with something like this:
 
 The meta tag attributes are [prefixed by data](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*) to ensure the resulting DOM is still HTML5 standards compliant.
 
+### How to Setup the Blazor project
+
+Add the following PackageReference to your csproj.
+
+
 This library requires the use of the [IJSInProcessRuntime](https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsinprocessruntime) to access the DOM to extract the <meta> tags. This can normally be found in the IServiceCollection that gets passed to ConfigureServices at configuration time.
 
 ```C#
