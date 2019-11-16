@@ -55,7 +55,7 @@ namespace Fario.Extensions.Configuration
 
                 if (key != null && value != null)
                 {
-                    config.Add(key, value);
+                    config[key] = value;
                 }
             }
 
