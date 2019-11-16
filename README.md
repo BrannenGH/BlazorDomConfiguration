@@ -1,4 +1,6 @@
-﻿> WARNING: Do not store sensitive data like connection strings or keys in the DOM, as any configuration done here is publicly available.
+﻿[![Build Status](https://dev.azure.com/fariarto/Fario.Extensions.Configuration/_apis/build/status/BrannenGH.BlazorDomConfiguration?branchName=master)](https://dev.azure.com/fariarto/Fario.Extensions.Configuration/_build/latest?definitionId=1&branchName=master)
+
+> WARNING: Do not store sensitive data like connection strings or keys in the DOM, as any configuration done here is publicly available.
 
 # Blazer DOM Configuration
 
