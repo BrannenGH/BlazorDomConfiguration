@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Fario.Extensions.Configuration.DomConfiguration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;

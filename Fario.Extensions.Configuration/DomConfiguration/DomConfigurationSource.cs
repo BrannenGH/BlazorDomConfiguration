@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.JSInterop;
 
-namespace Fario.Extensions.Configuration
+namespace Fario.Extensions.Configuration.DomConfiguration
 {
     /// <summary>
     /// Represents a DOM which can be used to retrieve a configuration from the meta tags in a document head.

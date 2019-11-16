@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Fario.Extensions.Configuration
+namespace Fario.Extensions.Configuration.DomConfiguration
 {
     /// <summary>
     /// Uses an instance of IJSInProcessRuntime to 
