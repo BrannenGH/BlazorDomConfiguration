@@ -18,13 +18,6 @@ namespace Fario.Extensions.Configuration
         private readonly string keyLabel;
         private readonly string valueLabel;
 
-        // I would have liked to just run the document.getElementsByTagName() function and do the rest of the parsing
-        // in the C# runtime, but the HTMLCollection returned by that function does not serialize well, and nor does the
-        // DOM node objects themselves. So only POJO objects are taken from the IJSRuntime, which serializes correctly.
-        /// <summary>JavaScript function to get the Metatags.</summary>
-        private string GetMetatagsJS => 
-            "Array.from(document.getElementsByTagName(\"meta\")).map(x => x.attributes).map(x => { return { key: x[\"" + keyLabel + "\"], value: x[\"" + valueLabel + "\"]}}).filter(x => x.key != undefined).map(x => { return { key: x.key.value, value: x.value.value } })";
-
         /// <summary>
         /// Configures a configuration that can be loaded from the DOM accessed by the IJSRuntime through the "window.document" field.
         /// </summary>
@@ -35,10 +28,6 @@ namespace Fario.Extensions.Configuration
         {
             keyLabel = key;
             valueLabel = value;
-
-            // The JS runtime needs to be cast to the IJSInProcessRuntime so that it can run JavaScript synchronously.
-            // All calls to IJSRuntime.InvokeAsync<T>().Result fail if they are run while the Blazor app is starting up,
-            // which causes the application to hang.
             this.jsRuntime = jsRuntime;
         }
 
@@ -47,7 +36,7 @@ namespace Fario.Extensions.Configuration
         /// </summary>
         public override void Load()
         {
-            Data = ParseMetadata(jsRuntime.Invoke<JsonElement>("eval", GetMetatagsJS));
+            Data = ParseMetadata(jsRuntime.GetKeyValueMetatags(keyLabel, valueLabel));
         }
 
         /// <summary>
