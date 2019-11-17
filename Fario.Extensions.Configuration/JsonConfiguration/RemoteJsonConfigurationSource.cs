@@ -27,7 +27,7 @@ namespace Fario.Extensions.Configuration.JsonConfiguration
 
             if (json == null)
             {
-                throw new Exception("The path could not be loaded from the remote server.");
+                throw new FileNotFoundException("The path could not be loaded from the remote server.");
             }
 
             Stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
