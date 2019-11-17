@@ -1,10 +1,10 @@
 ﻿[![Build Status](https://dev.azure.com/fariarto/Fario.Extensions.Configuration/_apis/build/status/BrannenGH.BlazorDomConfiguration?branchName=master)](https://dev.azure.com/fariarto/Fario.Extensions.Configuration/_build/latest?definitionId=1&branchName=master)
 
-> WARNING: Do not store sensitive data like connection strings or keys in the DOM, as any configuration done here is publicly available.
+> WARNING: Do not store sensitive data like connection strings or keys in the Blazor configuration, as any configuration done here is publicly available.
 
 # Blazor Configuration
 
-This extension allows creating an [IConfiguration](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.iconfiguration) by either placing `<meta>` tags in the header of the document the Blazor app is called from, or placing a `json` configuration file in the wwwroot folder.
+This extension allows creating an [IConfiguration](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.iconfiguration) by either placing `<meta>` tags in the header of the document the Blazor app is called from, or placing a JSON configuration file in the wwwroot folder.
 
 ## Approach
 
@@ -28,7 +28,7 @@ public void ConfigureServices(IServiceCollection services)
 
 	services.AddSingleton<IConfiguration>(
 		new ConfigurationBuilder().AddRemoteJsonConfiguration(
-			services.BuildServiceProvider().GetService<IJSRuntime>() as IJSInProcessRuntime ?? throw new Exception("No in process runtime could be found!", path)).Build()
+			services.BuildServiceProvider().GetService<IJSRuntime>() as IJSInProcessRuntime ?? throw new Exception("No in process runtime could be found!"), path).Build()
 		);
 		
 	// Other service logic
