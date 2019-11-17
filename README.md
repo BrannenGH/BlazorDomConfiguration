@@ -2,17 +2,42 @@
 
 > WARNING: Do not store sensitive data like connection strings or keys in the DOM, as any configuration done here is publicly available.
 
-# Blazer DOM Configuration
+# Blazor Configuration
 
-This extension allows creating an [IConfiguration](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.iconfiguration) by placing `<meta>` tags in the header of the document the Blazor app is called from.
+This extension allows creating an [IConfiguration](https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.iconfiguration) by either placing `<meta>` tags in the header of the document the Blazor app is called from, or placing a `json` configuration file in the wwwroot folder.
 
 ## Approach
 
 While most ASP.NET applications support [importing a configuration at startup](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/), this is difficult to do in a client-side Blazor application. This is because the limited browser environment, which usually just consists of the DOM, your app assembly, and some CSS files, doesn't have a good place to put configuration key value pairs that can be accessed at application bootstrapping time. Currently, the approach most applications are taking is to put the configuration information into the assembly, but this means that any change in configuration requires creating a new assembly.
 
-To avoid creating a new assembly, this approach bakes configuration values into the DOM. This still means that the document structure is tied to the configuration, but it is much easier to manage many different `index.html` files than it is to manage many different assemblies.
+To avoid creating a new assembly, this approach allows the use of either the DOM or a seperate configuration file to provide a configuration. 
 
-## How to Use
+## How to Use — File Configuration
+
+A remote file, ideally placed in the wwwroot folder in the blazor project, can be loaded synchronously at startup time to provide a configuration.
+
+### How to set up the Blazor Project
+
+Add the [NuGet package](https://www.nuget.org/packages/Fario.Extensions.Configuration) to your csproj, and then add the following to `Startup.ConfigureServices`, where `path` refers to either the path in the wwwroot folder, or it also could be any remote server:
+
+```C#
+public void ConfigureServices(IServiceCollection services)
+{
+	// Other service logic
+
+
+	services.AddSingleton<IConfiguration>(
+		new ConfigurationBuilder().AddRemoteJsonConfiguration(
+			services.BuildServiceProvider().GetService<IJSRuntime>() as IJSInProcessRuntime ?? throw new Exception("No in process runtime could be found!", path)).Build()
+		);
+		
+	// Other service logic
+}
+```
+
+This library requires the use of the [IJSInProcessRuntime](https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsinprocessruntime) to synchronusly run an XMLHttpRequest. This can normally be found in the IServiceCollection that gets passed to ConfigureServices at configuration time.
+
+## How to Use — DOM Configuration
 
 This library requires two steps — adding the configuration key-value pairs to the DOM, and then building the `IConfiguration`.
 
@@ -66,9 +91,3 @@ public void ConfigureServices(IServiceCollection services)
 ```
 
 This library requires the use of the [IJSInProcessRuntime](https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsinprocessruntime) to access the DOM to extract the <meta> tags. This can normally be found in the IServiceCollection that gets passed to ConfigureServices at configuration time.
-
-## Future Goals
-
-* Add tests
-* Support creating a configuration hierarchy, maybe by adding a "namespace" property to the key value pair
-* Support loading a different file, i.e. an appsettings.json file from the server at startup to parse into a configuration.
