@@ -19,4 +19,5 @@ steps:
     command: 'pack'
     packagesToPack: 'Fario.Extensions.Configuration/**.csproj'
     versioningScheme: 'off'
+    packDirectory: '$(Build.ArtifactStagingDirectory)'
     configuration: 'Release'
